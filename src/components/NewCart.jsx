@@ -3,6 +3,7 @@ import { useSelector, useDispatch} from "react-redux"
 
 import {Link, useNavigate} from "react-router-dom"
 import { addToCart, clearCart, decreaseCart, getTotals, removeFromCart } from "../features/cartSlice";
+import PayButton from "./PayButton";
 
 
 const NewCart = () => {
@@ -108,7 +109,10 @@ const NewCart = () => {
                             <p>Taxes and shipping calculated at checkout</p>
                             
                             {/* We get auth using react hooks */}
-                            {auth._id ? <button>Check out</button> : 
+                            {auth._id ?
+                            <PayButton cartItems={cart.cartItems}/>
+                            // <button>Check out</button>
+                             : 
                              <button className="cart-login" onClick ={()=> navigate("/login")}>
                                 Login to Check out
                             </button>}
