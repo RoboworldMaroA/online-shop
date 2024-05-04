@@ -1,28 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../features/authSlice";
+import { StyledForm } from "./StyledForm";
 
 const  Register = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const auth = useSelector((state) => state.auth);
     console.log(auth);
+
+    useEffect(()=> {
+        if(auth._id){
+            navigate("/cart");
+        }
+
+    },([auth._id, navigate]));
+
 
     const [user, setUser] = useState({
         name: "",
         email: "",
         password: ""
-    })
+    });
 
     // console.log("user:",user);
     const handleSubmit = (e) =>{
         e.preventDefault();
         // console.log("welcome in submit function");
         dispatch(registerUser(user));
-    }
+    };
 
     return (<>
-    <form onSubmit = {handleSubmit}> 
+    <StyledForm onSubmit = {handleSubmit}> 
         <h2>Register</h2>
         <input type="text" placeholder="name"
         onChange={(e) => setUser({...user, name: e.target.value})}
@@ -42,7 +53,7 @@ const  Register = () => {
         {auth.registerStatus === "rejected" ? (
         <p>{auth.registerError}</p>) :
         null}
-    </form>
+    </StyledForm>
     
     
     </>  );

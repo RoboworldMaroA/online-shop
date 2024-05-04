@@ -12,7 +12,7 @@ import productsReducer, {productFetch} from './features/productsSlice.js';
 
 import { productsApi } from './features/poductsAPI.js';
 import cartReducer, { getTotals } from './features/cartSlice.js';
-import authReducer from './features/authSlice';
+import authReducer, { loadUser } from './features/authSlice';
 
 const store = configureStore({
   reducer: {
@@ -30,6 +30,8 @@ const store = configureStore({
 store.dispatch(productFetch());
 //get a total value in the basket
 store.dispatch(getTotals());
+//load user- import
+store.dispatch(loadUser(null)); 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

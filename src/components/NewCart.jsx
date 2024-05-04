@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch} from "react-redux"
 
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import { addToCart, clearCart, decreaseCart, getTotals, removeFromCart } from "../features/cartSlice";
+
 
 const NewCart = () => {
 
     const cart = useSelector((state) => state.cart);
+    const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getTotals());
@@ -41,19 +44,18 @@ const NewCart = () => {
                     <p>Your cart is empty.</p>
                     <div className="start-shopping">
                         <Link to="/" >
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                            width="20"
-                            height="20" 
-                            fill="currentColor" 
-                            className="bi bi-arrow-right" 
-                            viewBox="0 0 16 16">
-                        <path 
-                            fillRule="evenodd"
-                             d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-</svg>
-                            <span>Start Shopping</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                width="20"
+                                height="20" 
+                                fill="currentColor" 
+                                className="bi bi-arrow-right" 
+                                viewBox="0 0 16 16">
+                                <path 
+                                fillRule="evenodd"
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                            </svg>
+                                <span>Start Shopping</span>
                         </Link>
-
                     </div>
                 </div>
             ): (        
@@ -104,7 +106,13 @@ const NewCart = () => {
                                 <span className="amount">${cart.cartTotalAmount}</span>
                             </div>
                             <p>Taxes and shipping calculated at checkout</p>
-                            <button>Checkout</button>
+                            
+                            {/* We get auth using react hooks */}
+                            {auth._id ? <button>Check out</button> : 
+                             <button className="cart-login" onClick ={()=> navigate("/login")}>
+                                Login to Check out
+                            </button>}
+                            
 
                             <div className="continue-shopping">
                                 <Link to="/" >

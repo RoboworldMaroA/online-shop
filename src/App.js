@@ -8,6 +8,7 @@ import Home from './components/Home';
 import NewCart from './components/NewCart';
 import NotFound from './components/NotFound';
 import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 
 
 
@@ -25,6 +26,7 @@ function App() {
           <Route path = "/" exact element={<Home/>}/>
           <Route path = "/cart" element={<NewCart/>}/>
           <Route path="/register" element={<Register/>}/>
+          <Route path="/login" element={<Login/>}/>
           <Route path = "/not-found" element={<NotFound/>}/>
           
           <Route path="*" element={<NotFound/>} />

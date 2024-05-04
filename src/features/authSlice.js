@@ -55,23 +55,23 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// export const loginUser = createAsyncThunk(
-//   "auth/loginUser",
-//   async (values, { rejectWithValue }) => {
-//     try {
-//       const token = await axios.post(`${url}/login`, {
-//         email: values.email,
-//         password: values.password,
-//       });
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async (values, { rejectWithValue }) => {
+    try {
+      const token = await axios.post(`${url}/login`, {
+        email: values.email,
+        password: values.password,
+      });
 
-//       localStorage.setItem("token", token.data);
-//       return token.data;
-//     } catch (error) {
-//       console.log(error.response);
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
+      localStorage.setItem("token", token.data);
+      return token.data;
+    } catch (error) {
+      console.log(error.response);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 // export const getUser = createAsyncThunk(
 //   "auth/getUser",
@@ -98,6 +98,7 @@ const authSlice = createSlice(
     reducers: {
 
       loadUser(state, action) {
+        //this token is from local storage
         const token = state.token;
   
         if (token) {
@@ -157,6 +158,33 @@ const authSlice = createSlice(
         };
       });
 
+      //***** extra reducers for login */
+      builder.addCase( loginUser.pending, (state, action) =>{
+        return { ...state, loginStatus: "pending"}
+      });
+      //response from backend when login
+      builder.addCase( loginUser.fulfilled, (state, action) =>{
+        if(action.payload){
+          const user = jwtDecode(action.payload);
+          return{
+            ...state,
+            token: action.payload,
+            name: user.name,
+            email: user.email,
+            _id: user._id,
+            loginStatus: "success",
+          };
+        } else return state;
+      });
+      //just for error used in login
+      builder.addCase( loginUser.rejected, (state, action) =>{
+        return{
+          ...state,
+          loginStatus: "rejected",
+          loginError: action.payload,
+
+        };
+      });
 
 
     },
