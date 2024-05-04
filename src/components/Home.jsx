@@ -1,6 +1,6 @@
 // If you want to use a value from the state use this but in this version we do not need at the moment
 // import {useSelector} from "react-redux"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import{ useNavigate} from "react-router"
 import { useGetAllProductsQuery } from "../features/poductsAPI";
 import { addToCart } from "../features/cartSlice";
@@ -10,7 +10,11 @@ const Home = () => {
     //get a data from redux and store state value
     // const {item, status} = useSelector(state => state.products)
     
+    const {items: products, status} = useSelector((state) => state.products);
     
+
+    
+
     const {data, error, isLoading} = useGetAllProductsQuery();
     const dispatch = useDispatch();
     const navigate = useNavigate();

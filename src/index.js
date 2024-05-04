@@ -1,3 +1,5 @@
+
+//index.js used in frontend
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -10,22 +12,24 @@ import productsReducer, {productFetch} from './features/productsSlice.js';
 
 import { productsApi } from './features/poductsAPI.js';
 import cartReducer, { getTotals } from './features/cartSlice.js';
+import authReducer from './features/authSlice';
 
 const store = configureStore({
   reducer: {
     products: productsReducer,
     cart: cartReducer,
+    auth: authReducer,
     [productsApi.reducerPath]: productsApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(productsApi.middleware);
-  }
+    return getDefaultMiddleware().concat(productsApi.middleware)
+  },
 });
 
 //get data from features/productSlice
-store.dispatch(productFetch())
+store.dispatch(productFetch());
 //get a total value in the basket
-store.dispatch(getTotals())
+store.dispatch(getTotals());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

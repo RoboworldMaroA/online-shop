@@ -45,7 +45,7 @@ const NewCart = () => {
                             width="20"
                             height="20" 
                             fill="currentColor" 
-                            class="bi bi-arrow-right" 
+                            className="bi bi-arrow-right" 
                             viewBox="0 0 16 16">
                         <path 
                             fillRule="evenodd"
@@ -112,7 +112,7 @@ const NewCart = () => {
                                     width="20"
                                     height="20" 
                                     fill="currentColor" 
-                                    class="bi bi-arrow-right" 
+                                    className="bi bi-arrow-right" 
                                     viewBox="0 0 16 16">
                                 <path 
                                     fillRule="evenodd"
